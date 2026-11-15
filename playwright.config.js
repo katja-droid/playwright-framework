@@ -2,9 +2,9 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { defineConfig, devices } = require('@playwright/test');
 
-const wdioEnvPath = path.join(__dirname, 'wdio', '.env');
-if (fs.existsSync(wdioEnvPath)) {
-  process.loadEnvFile(wdioEnvPath);
+const envPath = path.join(__dirname, 'playwright', '.env');
+if (fs.existsSync(envPath)) {
+  process.loadEnvFile(envPath);
 }
 
 module.exports = defineConfig({

@@ -1,10 +1,9 @@
 # Playwright browser tests
 
-The four specs in `tests/practice-software-testing.spec.js` mirror the first
-four scenarios in `wdio/src/tests/chai-interfaces.tests.js`. Search, sort, and
-sign-in data come from `wdio/data/test-data.js` and `wdio/.env` when the WDIO
-environment is complete. Without that local environment, search and sort use
-the feature's defaults and sign-in is skipped.
+The four specs in `tests/practice-software-testing.spec.js` cover product
+search, sorting, sign-in, and product details. Test data is loaded from
+`playwright/.env`; all required variables are listed in
+`playwright/data/test-data.js`.
 
 ## Setup
 
@@ -33,8 +32,11 @@ npm run test:safari
 ```
 
 Tests run headlessly by default and each failed test is retried twice before
-being marked failed. The existing `wdio/.env` is loaded automatically and
-ignored by Git. `BASE_URL` can be set in the shell to override the default
-Practice Software Testing URL.
+being marked failed. The local `playwright/.env` file is loaded automatically
+and ignored by Git. It must define `TEST_EMAIL`, `TEST_PASSWORD`,
+`SEARCH_TERM`, `SORT_OPTION`, `ADDRESS_STATE`, `ADDRESS_POSTAL_CODE`,
+`ADDRESS_HOUSE_NUMBER`, `ADDRESS_COUNTRY`, and `PAYMENT_METHOD`.
+`BASE_URL` can be set in the shell to override the default Practice Software
+Testing URL.
 
 The HTML report is written to `playwright-report/`.

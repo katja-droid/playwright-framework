@@ -1,38 +1,5 @@
 const { test, expect } = require('@playwright/test');
-
-const requiredWdioData = [
-  'TEST_EMAIL',
-  'TEST_PASSWORD',
-  'SEARCH_TERM',
-  'SORT_OPTION',
-  'ADDRESS_STATE',
-  'ADDRESS_POSTAL_CODE',
-  'ADDRESS_HOUSE_NUMBER',
-  'ADDRESS_COUNTRY',
-  'PAYMENT_METHOD',
-];
-const hasCompleteWdioData = requiredWdioData.every((key) => process.env[key]);
-
-async function loadTestData() {
-  if (hasCompleteWdioData) {
-    return (await import('../wdio/data/test-data.js')).testData;
-  }
-
-  return {
-    credentials: {
-      email: process.env.TEST_EMAIL,
-      password: process.env.TEST_PASSWORD,
-    },
-    searchTerm: process.env.SEARCH_TERM || 'Pliers',
-    sortOption: process.env.SORT_OPTION || 'Price (High - Low)',
-  };
-}
-
-let testData;
-
-test.beforeAll(async () => {
-  testData = await loadTestData();
-});
+const { testData } = require('../playwright/data/test-data');
 
 test('Scenario 1: Search for an exact product by name', async ({ page }) => {
   await page.goto('/');
@@ -84,11 +51,6 @@ test('Scenario 2: Sort products by price in descending order', async ({ page }) 
 });
 
 test('Scenario 3: Successful user sign in with valid credentials', async ({ page }) => {
-  test.skip(
-    !testData.credentials.email || !testData.credentials.password,
-    'Set TEST_EMAIL and TEST_PASSWORD in wdio/.env to run the sign-in scenario.',
-  );
-
   await page.goto('/auth/login');
   await page.getByTestId('email').fill(testData.credentials.email);
   await page.getByTestId('password').fill(testData.credentials.password);
